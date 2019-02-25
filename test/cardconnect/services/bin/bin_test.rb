@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::Bin do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       path = "#{@service.path}/#{valid_bin_request['merchid']}/#{valid_bin_request['token']}"
       stubs.get(path) { [200, {}, valid_bin_response] }
     end

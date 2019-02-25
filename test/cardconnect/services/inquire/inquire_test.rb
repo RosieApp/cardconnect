@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::Inquire do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       path = "#{@service.path}/#{valid_inquire_request['retref']}/#{valid_inquire_request['merchid']}"
       stubs.get(path) { [200, {}, valid_inquire_response] }
     end

@@ -3,6 +3,9 @@ require 'faraday_middleware'
 
 module CardConnect
   class Connection
+
+    attr_reader :config
+
     def initialize(config = CardConnect.configuration)
       @config = config
     end

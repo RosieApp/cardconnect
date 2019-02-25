@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::SettlementStatus do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       stubs.get(@service.path) { [200, {}, valid_settlestat_response] }
     end
     @service = CardConnect::Service::SettlementStatus.new(@connection)
@@ -18,7 +19,7 @@ describe CardConnect::Service::SettlementStatus do
 
   describe '#build_request' do
     before do
-      @valid_params = valid_settlestat_request
+      @valid_params = valid_settlestat_request_date
     end
 
     after do
@@ -47,7 +48,7 @@ describe CardConnect::Service::SettlementStatus do
     end
 
     it 'creates a response when a valid request is processed' do
-      @service.build_request(valid_settlestat_request)
+      @service.build_request(valid_settlestat_request_date)
       @service.submit
       @service.response.must_be_kind_of CardConnect::Service::SettlementStatusResponse
     end
