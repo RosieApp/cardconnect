@@ -18,7 +18,7 @@ describe CardConnect::Service::SettlementStatus do
 
   describe '#build_request' do
     before do
-      @valid_params = valid_settlestat_request
+      @valid_params = valid_settlestat_request_date
     end
 
     after do
@@ -47,7 +47,7 @@ describe CardConnect::Service::SettlementStatus do
     end
 
     it 'creates a response when a valid request is processed' do
-      @service.build_request(valid_settlestat_request)
+      @service.build_request(valid_settlestat_request_date)
       @service.submit
       @service.response.must_be_kind_of CardConnect::Service::SettlementStatusResponse
     end

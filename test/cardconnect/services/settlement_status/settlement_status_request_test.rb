@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe CardConnect::Service::SettlementStatusRequest do
   before do
-    @request = CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request)
+    @request = CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request_date)
   end
 
   after do
@@ -24,8 +24,14 @@ describe CardConnect::Service::SettlementStatusRequest do
       CardConnect::Service::SettlementStatusRequest.new.valid?.must_equal false
     end
 
-    it 'should be valid if valid attributes are passed in' do
-      CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request).valid?.must_equal true
+    describe 'should be valid if valid attributes are passed in' do
+      it 'is valid if date is passed' do
+        CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request_date).valid?.must_equal true
+      end
+
+      it 'is valid if batchid is passed' do
+        CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request_batch).valid?.must_equal true
+      end
     end
   end
 
@@ -59,8 +65,17 @@ describe CardConnect::Service::SettlementStatusRequest do
   end
 
   describe '#payload' do
-    it 'should generate the correct path params' do
-      @request.payload.must_equal "?merchid=#{@request.merchid}&date=#{@request.date}&"
+    describe 'when date is passed' do
+      it 'should generate the correct path params' do
+        @request.payload.must_equal "?merchid=#{@request.merchid}&date=#{@request.date}&"
+      end
+    end
+
+    describe 'when batchid is passed' do
+      it 'should generate the correct path params' do
+        request = CardConnect::Service::SettlementStatusRequest.new(valid_settlestat_request_batch)
+        request.payload.must_equal "?merchid=#{@request.merchid}&batchid=#{request.batchid}&"
+      end
     end
   end
 end

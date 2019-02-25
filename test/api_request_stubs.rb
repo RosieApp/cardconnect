@@ -59,10 +59,17 @@ def valid_inquire_request
   }
 end
 
-def valid_settlestat_request
+def valid_settlestat_request_date
   {
     'merchid' => '000000927996',
     'date' => '0110'
+  }
+end
+
+def valid_settlestat_request_batch
+  {
+    'merchid' => '000000927996',
+    'batchid' => '100'
   }
 end
 
