@@ -4,7 +4,8 @@ describe CardConnect::Service::Profile do
 
   describe 'GET profile' do
     before do
-      @connection = CardConnect::Connection.new.connection do |stubs|
+      @connection = CardConnect::Connection.new
+      @connection.connection do |stubs|
         path = "#{@service.path}/#{valid_profile_request['profileid']}/#{valid_profile_request['acctid']}/#{valid_profile_request['merchid']}"
         stubs.get(path) { [200, {}, valid_profile_get_response] }
       end
@@ -59,7 +60,8 @@ describe CardConnect::Service::Profile do
 
   describe 'DELETE profile' do
     before do
-      @connection = CardConnect::Connection.new.connection do |stubs|
+      @connection = CardConnect::Connection.new
+      @connection.connection do |stubs|
         path = "#{@service.path}/#{valid_profile_request['profileid']}/#{valid_profile_request['acctid']}/#{valid_profile_request['merchid']}"
         stubs.delete(path) { [200, {}, valid_profile_delete_response] }
       end
@@ -114,7 +116,8 @@ describe CardConnect::Service::Profile do
 
   describe 'CREATE/UPDATE profile' do
     before do
-      @connection = CardConnect::Connection.new.connection do |stubs|
+      @connection = CardConnect::Connection.new
+      @connection.connection do |stubs|
         stubs.put(@service.path) { [200, {}, valid_profile_put_response] }
       end
       @service = CardConnect::Service::Profile.new('put', @connection)

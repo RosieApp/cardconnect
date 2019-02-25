@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::Authorization do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       stubs.put(@service.path) { [200, {}, valid_auth_response] }
     end
     @service = CardConnect::Service::Authorization.new(@connection)

@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::Capture do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       stubs.put(@service.path) { [200, {}, valid_capture_response] }
     end
     @service = CardConnect::Service::Capture.new(@connection)

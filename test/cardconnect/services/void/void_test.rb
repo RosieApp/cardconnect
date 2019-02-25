@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::Void do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       stubs.put(@service.path) { [200, {}, valid_void_response] }
     end
     @service = CardConnect::Service::Void.new(@connection)

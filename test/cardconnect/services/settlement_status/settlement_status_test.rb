@@ -2,7 +2,8 @@ require 'test_helper'
 
 describe CardConnect::Service::SettlementStatus do
   before do
-    @connection = CardConnect::Connection.new.connection do |stubs|
+    @connection = CardConnect::Connection.new
+    @connection.connection do |stubs|
       stubs.get(@service.path) { [200, {}, valid_settlestat_response] }
     end
     @service = CardConnect::Service::SettlementStatus.new(@connection)
