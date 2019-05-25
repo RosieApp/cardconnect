@@ -12,8 +12,8 @@ module CardConnect
       # @return CardConnect::ServiceEndpoint
       def initialize(connection = CardConnect.connection)
         @resource_name = '/'
-        @config = CardConnect.configuration
-        @connection = connection
+        @config = connection.config
+        @connection = connection.connection
       end
 
       def path

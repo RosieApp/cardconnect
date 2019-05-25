@@ -48,7 +48,7 @@ module CardConnect
     end
 
     def connection
-      @connection ||= Connection.new.connection
+      @connection ||= Connection.new
     end
   end
 end

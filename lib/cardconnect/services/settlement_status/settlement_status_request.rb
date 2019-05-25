@@ -5,9 +5,9 @@ module CardConnect
     class SettlementStatusRequest
       include Utils
 
-      REQUIRED_FIELDS = [:merchid, :date].freeze
+      REQUIRED_FIELDS = [:merchid].freeze
 
-      FIELDS = REQUIRED_FIELDS
+      FIELDS = REQUIRED_FIELDS + [:date, :batchid]
 
       attr_accessor(*FIELDS)
       attr_reader :errors
@@ -31,7 +31,9 @@ module CardConnect
       def payload
         payload = '?'
         FIELDS.each do |field|
-          payload += "#{field}=#{send(field)}&"
+          if value = send(field)
+            payload += "#{field}=#{value}&"
+          end
         end
         payload
       end
