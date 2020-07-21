@@ -38,5 +38,12 @@ module CardConnect
         },
       }.merge(@config.connection_options)
     end
+
+    def validate_mid
+      connection.put('/cardconnect/rest/', { merchid: @config.merchant_id})
+      true
+    rescue Faraday::ClientError => e
+      false
+    end
   end
 end
