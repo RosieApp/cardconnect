@@ -47,12 +47,21 @@ describe CardConnect::Service::CaptureRequest do
     it 'should be valid if valid attributes are passed in' do
       expect(CardConnect::Service::CaptureRequest.new(valid_capture_request).valid?).must_equal true
     end
+
+    it 'should not be valid if a field has an invalid value' do
+      data = valid_capture_request.dup.merge(cof: 'bad')
+      request = CardConnect::Service::CaptureRequest.new(data)
+      expect(request.valid?).must_equal false
+      expect(request.errors).must_include('Invalid value for cof: must be one of C, M')
+    end
   end
 
   describe '#errors' do
     CardConnect::Service::CaptureRequest::REQUIRED_FIELDS.each do |field|
       it "should have an error message if #{field} is missing" do
-        expect(CardConnect::Service::CaptureRequest.new.errors).must_include "#{field.to_s.capitalize} is missing"
+        expect(
+          CardConnect::Service::CaptureRequest.new.errors
+        ).must_include "#{field.to_s.capitalize} is missing"
       end
     end
   end

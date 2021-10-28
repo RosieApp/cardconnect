@@ -139,6 +139,13 @@ describe CardConnect::Service::AuthorizationRequest do
     it 'should be valid if valid attributes are passed in' do
       assert CardConnect::Service::AuthorizationRequest.new(valid_auth_request).valid?
     end
+
+    it 'should not be valid if a field has an invalid value' do
+      data = valid_auth_request.dup.merge(cof: 'bad')
+      request = CardConnect::Service::AuthorizationRequest.new(data)
+      expect(request.valid?).must_equal false
+      expect(request.errors).must_include('Invalid value for cof: must be one of C, M')
+    end
   end
 
   describe '#errors' do
