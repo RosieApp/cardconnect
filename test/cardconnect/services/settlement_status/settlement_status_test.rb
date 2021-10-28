@@ -14,7 +14,7 @@ describe CardConnect::Service::SettlementStatus do
   end
 
   it 'must have the right path' do
-    @service.path.must_equal '/cardconnect/rest/settlestat'
+    expect(@service.path).must_equal '/cardconnect/rest/settlestat'
   end
 
   describe '#build_request' do
@@ -29,28 +29,28 @@ describe CardConnect::Service::SettlementStatus do
     it 'creates a Capture request object with the passed in params' do
       @service.build_request(@valid_params)
 
-      @service.request.must_be_kind_of CardConnect::Service::SettlementStatusRequest
-      @service.request.merchid.must_equal '000000927996'
-      @service.request.date.must_equal '0110'
+      expect(@service.request).must_be_kind_of CardConnect::Service::SettlementStatusRequest
+      expect(@service.request.merchid).must_equal '000000927996'
+      expect(@service.request.date).must_equal '0110'
     end
 
     it 'uses default merchant ID if merchid is not passed in' do
       @service.build_request(@valid_params.reject! { |k, _| k == 'merchid' })
-      @service.request.must_be_kind_of CardConnect::Service::SettlementStatusRequest
-      @service.request.merchid.must_equal 'merchant123'
+      expect(@service.request).must_be_kind_of CardConnect::Service::SettlementStatusRequest
+      expect(@service.request.merchid).must_equal 'merchant123'
     end
   end
 
   describe '#submit' do
     it 'raises an error when there is no request' do
-      @service.request.nil?.must_equal true
-      proc { @service.submit }.must_raise CardConnect::Error
+      expect(@service.request.nil?).must_equal true
+      expect(proc { @service.submit }).must_raise CardConnect::Error
     end
 
     it 'creates a response when a valid request is processed' do
       @service.build_request(valid_settlestat_request_date)
       @service.submit
-      @service.response.must_be_kind_of CardConnect::Service::SettlementStatusResponse
+      expect(@service.response).must_be_kind_of CardConnect::Service::SettlementStatusResponse
     end
   end
 end
