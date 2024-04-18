@@ -21,15 +21,15 @@ describe CardConnect::Connection do
 
     describe 'Faraday handlers' do
       it 'must have a handler for basic authentication first' do
-        expect(@connection.builder.handlers.first).must_be :===, Faraday::Request::BasicAuthentication
+        expect(@connection.builder.handlers.first).must_be :===, Faraday::Request::Authorization
       end
 
       it 'must have a handler for encoding the request as json second' do
-        expect(@connection.builder.handlers[1]).must_be :===, FaradayMiddleware::EncodeJson
+        expect(@connection.builder.handlers[1]).must_be :===, Faraday::Request::Json
       end
 
       it 'must have a handler for parsing the json response third' do
-        expect(@connection.builder.handlers[2]).must_be :===, FaradayMiddleware::ParseJson
+        expect(@connection.builder.handlers[2]).must_be :===, Faraday::Response::Json
       end
 
       it 'has ssl verification on by default' do
